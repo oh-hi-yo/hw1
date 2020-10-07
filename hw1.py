@@ -10,5 +10,11 @@ def main():
     arrival_time = df.iloc[1, 1:].tolist()
     print(arrival_time)
 
+    # zip returns a list of tuples. map(list, [...]) calls list on each tuple in the list. list(map([...]) turns the map object into a readable list.
+    process_and_arrival = list(map(list, (zip(process_time, arrival_time))))
+    print(process_and_arrival)
+    process_time = mPQ(process_time)
+    # print(process_time.heap)
+
 
 main()
