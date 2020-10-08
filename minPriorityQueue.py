@@ -1,11 +1,8 @@
 class minPriorityQueue:
     # implement a minimmum priority queue by min heap
-    def __init__(self, array=[]):
-        self.heap = list([None])  # None for the array[0], root = array[1]
+    def __init__(self):
+        self.heap = list([None])  # None for the heap[0], root = heap[1]
         self.length = 0
-        if len(array) != 0:
-            for item in array:
-                self.insert(item)
         return
 
     def insert(self, item):
