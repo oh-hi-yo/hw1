@@ -1,5 +1,6 @@
 import pandas as pd
 from minPriorityQueue import minPriorityQueue as mPQ
+import time
 
 
 def SRPT(process_time, arrival_time):
@@ -8,7 +9,8 @@ def SRPT(process_time, arrival_time):
     for i in range(len(arrival_time)):
         if arrival_time[i] <= current_time:
             process_queue.insert(process_time[i])
-            #print("{} round, and heap is {}, current_time = {}".format(i, process_queue.heap, current_time))
+            print("{} round, and heap is {}, current_time = {}".format(
+                i, process_queue.heap, current_time))
             if i != (len(arrival_time) - 1):
                 can_use_time = arrival_time[i + 1] - arrival_time[i]
                 try:
@@ -19,6 +21,10 @@ def SRPT(process_time, arrival_time):
                         can_use_time -= min_time
                     process_queue.heap[1] -= can_use_time
                     current_time += can_use_time
+                    '''
+                    print("in the while{} round, and heap is {}, current_time = {}".format(
+                        i, process_queue.heap, current_time))
+                    '''
                 except:
                     pass
             else:
@@ -40,7 +46,8 @@ def SRPT(process_time, arrival_time):
                 current_time += can_use_time
             # 因為已經有等時間了，所以最後還是得把process time加回去
             process_queue.insert(process_time[i])
-            #print("{} round, and heap is {}, current_time = {}".format(i, process_queue.heap, current_time))
+            print("{} round, and heap is {}, current_time = {}".format(
+                i, process_queue.heap, current_time))
     return current_time
 
 
@@ -51,10 +58,18 @@ def main():
     # print(process_time)
     arrival_time = df.iloc[1, 1:].tolist()
     # print(arrival_time)
-
     for i in range(20, len(arrival_time) + 1, 20):
+        start = time.time()
         print("completion time of the first {} jobs is {}".format(
             i, SRPT(process_time[:i], arrival_time[:i])))
+        end = time.time()
+        print("elapsed run time is {} seconds".format(end - start))
+
+    '''
+    i = 100
+    print("completion time of the first {} jobs is {}".format(
+        i, SRPT(process_time[:i], arrival_time[:i])))
+    '''
 
 
 main()
