@@ -16,10 +16,12 @@ class minPriorityQueue:
         # exchange first item and last item, then order again
         minimum = self.heap[1]
         self.__exchange(1, self.length)
-        self.heap.pop()  # pop() 函数用于移除列表中的一个元素（默认最后一个元素），并且返回该元素的值。
+        # pop() 函数用于移除列表中的一个元素（默认最后一个元素），并且返回该元素的值。
+        self.heap.pop()
         self.length = self.length - 1
+        #print("the extractMin heap length = {}". format(self.length))
         self.__sink(1)
-
+        #print("the extractMin heap is {}".format(self.heap))
         return minimum
 
     # __swim() 等前面有兩個底線的函數，也像是 C 或 Java 等語言中的 private 作用，能夠限制函數只能在類別中被呼叫
@@ -28,6 +30,7 @@ class minPriorityQueue:
         while k > 1 and self.__more(k // 2, k):
             self.__exchange(k // 2, k)
             k = k // 2
+            #print("swim k = {}".format(k))
         return
 
     def __sink(self, k):
@@ -36,14 +39,20 @@ class minPriorityQueue:
             j = k * 2
             if j < self.length and self.__more(j, j + 1):
                 j = j + 1
+            #print("sink k = {}, j = {}".format(k, j))
 
-            self.__exchange(k, j)  # exchange with the smallest child
+            if self.__more(k, j):
+                self.__exchange(k, j)  # exchange with the smallest child
             k = j
         return
 
     def __more(self, a, b):
         # return a boolean represent if item at a position is larger than item at b
         if self.heap[a] > self.heap[b]:
+            '''
+            print("left is {}, right is {}".format(
+                self.heap[a], self.heap[b]))
+            '''
             return True
         else:
             return False
